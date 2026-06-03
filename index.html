@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anél Henning — Data Scientist Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:  #1B2A4A;
+      --teal:  #2D7D7D;
+      --sage:  #5B8E6E;
+      --gold:  #C9A84C;
+      --light: #F4F7F6;
+      --mid:   #D8E5E2;
+      --slate: #4A5568;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--light);
+      color: var(--slate);
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--navy);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.75rem 2rem;
+      border-bottom: 3px solid var(--gold);
+    }
+    .nav-name { color: var(--white); font-weight: 700; font-size: 1rem; letter-spacing: 0.04em; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a { color: var(--mid); font-size: 0.85rem; text-decoration: none; transition: color .2s; }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 60%, #243656 100%);
+      color: var(--white);
+      padding: 5rem 2rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -60px; right: -60px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: rgba(45,125,125,0.18);
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -40px; right: 120px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.12);
+    }
+    .hero-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--navy);
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      padding: 0.25rem 0.75rem; border-radius: 20px;
+      margin-bottom: 1rem; text-transform: uppercase;
+    }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; line-height: 1.15; }
+    .hero h1 span { color: var(--gold); }
+    .hero-sub {
+      margin-top: 0.75rem;
+      font-size: 1.05rem; font-weight: 300; color: var(--mid);
+      max-width: 600px;
+    }
+    .hero-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+    .chip {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white); font-size: 0.78rem; font-weight: 500;
+      padding: 0.3rem 0.75rem; border-radius: 20px;
+    }
+    .hero-cta { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.65rem 1.4rem; border-radius: 8px;
+      font-size: 0.88rem; font-weight: 600; text-decoration: none;
+      transition: transform .15s, box-shadow .15s;
+      cursor: pointer; border: none;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+    .btn-primary { background: var(--gold); color: var(--navy); }
+    .btn-outline { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,0.4); }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── Section ── */
+    section { padding: 4rem 2rem; }
+    .section-inner { max-width: 900px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--teal);
+      margin-bottom: 0.4rem;
+    }
+    .section-title {
+      font-size: 1.8rem; font-weight: 800; color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+    .section-divider {
+      width: 48px; height: 4px; background: var(--gold);
+      border-radius: 2px; margin-bottom: 2.5rem;
+    }
+
+    /* ── Project Cards ── */
+    #projects { background: var(--white); }
+    .projects-grid { display: grid; gap: 2rem; }
+
+    .project-card {
+      border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--mid);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      transition: transform .2s, box-shadow .2s;
+      background: var(--white);
+    }
+    .project-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+
+    .card-header {
+      padding: 1.4rem 1.6rem 1rem;
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .card-number {
+      flex-shrink: 0;
+      width: 44px; height: 44px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 800; color: var(--white);
+    }
+    .card-header-text h3 { font-size: 1.15rem; font-weight: 700; color: var(--navy); }
+    .card-header-text p { font-size: 0.82rem; color: var(--teal); margin-top: 2px; }
+
+    .card-body { padding: 0 1.6rem 1.4rem; }
+    .card-desc { font-size: 0.92rem; line-height: 1.65; color: var(--slate); }
+
+    .card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+    .tag {
+      font-size: 0.72rem; font-weight: 600;
+      padding: 0.2rem 0.6rem; border-radius: 4px;
+    }
+
+    .card-metrics {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      background: var(--light); border-radius: 8px;
+      padding: 0.8rem 1rem; margin-top: 1rem;
+    }
+    .metric { text-align: center; min-width: 70px; }
+    .metric-val { font-size: 1.3rem; font-weight: 800; color: var(--navy); }
+    .metric-lbl { font-size: 0.68rem; color: var(--slate); margin-top: 1px; }
+
+    .card-academic {
+      margin-top: 1rem; padding: 0.7rem 1rem;
+      background: #EEF5F3; border-left: 3px solid var(--teal);
+      border-radius: 0 6px 6px 0; font-size: 0.82rem;
+      color: var(--slate); line-height: 1.5;
+    }
+    .card-academic strong { color: var(--teal); }
+
+    /* ── Color accents per project ── */
+    .accent-teal  .card-number { background: var(--teal); }
+    .accent-sage  .card-number { background: var(--sage); }
+    .accent-gold  .card-number { background: var(--gold); }
+    .accent-navy  .card-number { background: var(--navy); }
+
+    .accent-teal  .tag { background: #D4EEEE; color: var(--teal); }
+    .accent-sage  .tag { background: #DDF0E5; color: var(--sage); }
+    .accent-gold  .tag { background: #FDF3DC; color: #8C6A1A; }
+    .accent-navy  .tag { background: #D6DDE8; color: var(--navy); }
+
+    .accent-teal  .metric-val { color: var(--teal); }
+    .accent-sage  .metric-val { color: var(--sage); }
+    .accent-gold  .metric-val { color: #8C6A1A; }
+    .accent-navy  .metric-val { color: var(--navy); }
+
+    /* ── Skills ── */
+    #skills { background: var(--navy); color: var(--white); }
+    #skills .section-title { color: var(--white); }
+    #skills .section-label { color: var(--gold); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+    .skill-group h4 { font-size: 0.78rem; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+    .skill-list { list-style: none; }
+    .skill-list li { font-size: 0.88rem; color: var(--mid); padding: 0.2rem 0; }
+    .skill-list li::before { content: "→ "; color: var(--teal); }
+
+    /* ── About ── */
+    #about { background: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    @media (max-width: 600px) { .about-grid { grid-template-columns: 1fr; } }
+    .about-block h4 { font-size: 0.78rem; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+    .edu-item { margin-bottom: 0.75rem; }
+    .edu-item .year { font-size: 0.78rem; color: var(--teal); font-weight: 600; }
+    .edu-item .degree { font-size: 0.92rem; font-weight: 700; color: var(--navy); }
+    .edu-item .school { font-size: 0.85rem; color: var(--slate); }
+    .cert-list { list-style: none; }
+    .cert-list li { font-size: 0.88rem; color: var(--slate); padding: 0.25rem 0; border-bottom: 1px solid var(--mid); }
+    .cert-list li:last-child { border-bottom: none; }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--navy); color: var(--mid);
+      text-align: center; padding: 2rem;
+      border-top: 3px solid var(--gold);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      nav { flex-direction: column; gap: 0.5rem; }
+      .hero { padding: 3rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Nav ── -->
+<nav>
+  <span class="nav-name">Anél Henning &nbsp;|&nbsp; Data Scientist</span>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="AnelHenning_DataScientist_Portfolio_2026.pdf" target="_blank">Download PDF ↓</a></li>
+  </ul>
+</nav>
+
+<!-- ── Hero ── -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Data Scientist Portfolio · 2026</div>
+    <h1>Turning Retail Data<br>into <span>Actionable Insight</span></h1>
+    <p class="hero-sub">
+      Entry-level data scientist with a foundation in Python, R, SQL, and statistical analysis.
+      Background in retail operations, cybersecurity, and information design —
+      bringing both analytical rigor and clear data storytelling.
+    </p>
+    <div class="hero-chips">
+      <span class="chip">Python</span>
+      <span class="chip">R Studio</span>
+      <span class="chip">SQL</span>
+      <span class="chip">Machine Learning</span>
+      <span class="chip">Power BI</span>
+      <span class="chip">Statistical Analysis</span>
+      <span class="chip">Retail Analytics</span>
+      <span class="chip">Purdue Global MS</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View Projects ↓</a>
+      <a href="AnelHenning_DataScientist_Portfolio_2026.pdf" target="_blank" class="btn btn-outline">Download Portfolio PDF</a>
+    </div>
+  </div>
+</header>
+
+<!-- ── Projects ── -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-label">Data Science Projects</div>
+    <h2 class="section-title">4 Projects Built for Retail Roles</h2>
+    <div class="section-divider"></div>
+    <div class="projects-grid">
+
+      <!-- 01 Customer Segmentation -->
+      <div class="project-card accent-teal">
+        <div class="card-header">
+          <div class="card-number">01</div>
+          <div class="card-header-text">
+            <h3>Customer Segmentation</h3>
+            <p>Unsupervised Learning · K-Means Clustering · Retail Personalization</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">
+            Applied K-Means clustering (k=4, elbow method) to transactional data using an RFM model
+            (Recency, Frequency, Monetary). Identified four distinct shopper segments to drive targeted
+            marketing campaigns, reduce churn risk, and increase basket size for a grocery retailer.
+          </p>
+          <div class="card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">scikit-learn</span>
+            <span class="tag">K-Means</span>
+            <span class="tag">Pandas</span>
+            <span class="tag">Matplotlib</span>
+            <span class="tag">R Studio</span>
+            <span class="tag">ANOVA</span>
+          </div>
+          <div class="card-metrics">
+            <div class="metric"><div class="metric-val">4</div><div class="metric-lbl">Segments</div></div>
+            <div class="metric"><div class="metric-val">87%</div><div class="metric-lbl">Silhouette Score</div></div>
+            <div class="metric"><div class="metric-val">34%</div><div class="metric-lbl">Revenue — Top Cluster</div></div>
+            <div class="metric"><div class="metric-val">6</div><div class="metric-lbl">RFM Features</div></div>
+          </div>
+          <div class="card-academic">
+            <strong>Academic foundation:</strong> One-way ANOVA analysis (Purdue Global, ITP-527 Foundation of Data Analysis)
+            validated statistically significant differences in spend across movie rating groups using R Studio —
+            the same group-comparison technique applied here to shopper segments.
+          </div>
+        </div>
+      </div>
+
+      <!-- 02 Sales Forecasting -->
+      <div class="project-card accent-sage">
+        <div class="card-header">
+          <div class="card-number">02</div>
+          <div class="card-header-text">
+            <h3>Sales Forecasting</h3>
+            <p>Time Series · ARIMA · Prophet · Retail Demand Planning</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">
+            Built a time series forecasting pipeline on 3 years of weekly sales data across 12 product
+            categories. Compared ARIMA vs. Facebook Prophet with holiday regressors. Final model reduced
+            projected overstock shrink by ~15% across perishable SKUs in simulation. Excel Power Query
+            dashboard delivered weekly forecasts to buyers.
+          </p>
+          <div class="card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">statsmodels</span>
+            <span class="tag">ARIMA</span>
+            <span class="tag">Prophet</span>
+            <span class="tag">Pandas</span>
+            <span class="tag">Excel Power Query</span>
+          </div>
+          <div class="card-metrics">
+            <div class="metric"><div class="metric-val">8.2%</div><div class="metric-lbl">Best MAPE</div></div>
+            <div class="metric"><div class="metric-val">12 wks</div><div class="metric-lbl">Forecast Horizon</div></div>
+            <div class="metric"><div class="metric-val">3 yrs</div><div class="metric-lbl">Training Data</div></div>
+            <div class="metric"><div class="metric-val">15%</div><div class="metric-lbl">Overstock Reduction</div></div>
+          </div>
+          <div class="card-academic">
+            <strong>Academic foundation:</strong> TRUCKS Transportation stakeholder presentation (Purdue Global,
+            ITP-517 Statistics for IT) — applied data analytics to optimize routes, monitor fuel efficiency,
+            and improve load management using Excel and PowerPoint.
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 Recommendation System -->
+      <div class="project-card accent-gold">
+        <div class="card-header">
+          <div class="card-number">03</div>
+          <div class="card-header-text">
+            <h3>Product Recommendation System</h3>
+            <p>Collaborative Filtering · SVD · Customer Personalization</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">
+            Hybrid recommendation engine combining user-based collaborative filtering (Pearson similarity)
+            with content-based filtering on product attributes (organic, vegan, gluten-free tags).
+            SVD matrix factorization via the Surprise library. Cold-start users served via dietary
+            preference fallback. Proof-of-concept REST API serves top-5 recommendations per user.
+          </p>
+          <div class="card-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Surprise (SVD)</span>
+            <span class="tag">scikit-learn</span>
+            <span class="tag">SQL</span>
+            <span class="tag">Cosine Similarity</span>
+            <span class="tag">Pandas</span>
+          </div>
+          <div class="card-metrics">
+            <div class="metric"><div class="metric-val">0.61</div><div class="metric-lbl">Precision@5</div></div>
+            <div class="metric"><div class="metric-val">0.58</div><div class="metric-lbl">Recall@5</div></div>
+            <div class="metric"><div class="metric-val">+9pts</div><div class="metric-lbl">vs. Pure Collab</div></div>
+            <div class="metric"><div class="metric-val">Hybrid</div><div class="metric-lbl">Model Type</div></div>
+          </div>
+          <div class="card-academic">
+            <strong>Connects to Project 01:</strong> Recommendation outputs feed from the 4 customer segments —
+            Premium Fresh Shoppers receive organic upgrade nudges; Budget Loyalists receive bulk-buy alternatives.
+          </div>
+        </div>
+      </div>
+
+      <!-- 04 KPI Dashboard -->
+      <div class="project-card accent-navy">
+        <div class="card-header">
+          <div class="card-number">04</div>
+          <div class="card-header-text">
+            <h3>Retail KPI Dashboard</h3>
+            <p>Power BI · DAX · Executive Reporting · Data Storytelling</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">
+            Executive-level retail dashboard with four report pages: Sales Overview, Department Deep Dive,
+            Customer Trends, and Inventory &amp; Shrink. Data model built in Power Query connecting POS,
+            inventory, and customer transaction tables. DAX measures calculate rolling 4-week averages,
+            YoY growth, and shrink % vs. shrink budget. Mobile-optimized for store managers.
+          </p>
+          <div class="card-tags">
+            <span class="tag">Power BI</span>
+            <span class="tag">DAX</span>
+            <span class="tag">Power Query</span>
+            <span class="tag">Excel</span>
+            <span class="tag">SQL</span>
+            <span class="tag">Star Schema</span>
+          </div>
+          <div class="card-metrics">
+            <div class="metric"><div class="metric-val">4</div><div class="metric-lbl">Report Pages</div></div>
+            <div class="metric"><div class="metric-val">12</div><div class="metric-lbl">KPI Metrics</div></div>
+            <div class="metric"><div class="metric-val">Live</div><div class="metric-lbl">Data Refresh</div></div>
+            <div class="metric"><div class="metric-val">2</div><div class="metric-lbl">Audiences</div></div>
+          </div>
+          <div class="card-academic">
+            <strong>Academic foundation:</strong> Purdue Global ITP-517 stakeholder presentation skills +
+            MICA BS Graphic Design (2003) information design principles — applied to communicate
+            complex data clearly to non-technical executives.
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /projects-grid -->
+  </div>
+</section>
+
+<!-- ── Skills ── -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-label">Technical Toolkit</div>
+    <h2 class="section-title">Skills &amp; Tools</h2>
+    <div class="section-divider"></div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h4>Languages</h4>
+        <ul class="skill-list">
+          <li>Python</li>
+          <li>R / R Studio</li>
+          <li>SQL (MySQL)</li>
+          <li>Basic Java</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>Machine Learning</h4>
+        <ul class="skill-list">
+          <li>scikit-learn</li>
+          <li>K-Means Clustering</li>
+          <li>SVD / Matrix Factorization</li>
+          <li>ARIMA / Prophet</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>Data &amp; Analytics</h4>
+        <ul class="skill-list">
+          <li>Pandas / NumPy</li>
+          <li>Statistical Analysis</li>
+          <li>ANOVA</li>
+          <li>RFM Modeling</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>BI &amp; Visualization</h4>
+        <ul class="skill-list">
+          <li>Power BI / DAX</li>
+          <li>Excel (Power Query)</li>
+          <li>Matplotlib / Seaborn</li>
+          <li>Data Storytelling</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h4>Other</h4>
+        <ul class="skill-list">
+          <li>Workflow Documentation</li>
+          <li>Information Architecture</li>
+          <li>Adobe InDesign / XD</li>
+          <li>Process Mapping</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── About ── -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-label">Background</div>
+    <h2 class="section-title">About Anél Henning</h2>
+    <div class="section-divider"></div>
+    <p style="font-size:0.95rem;line-height:1.75;max-width:700px;margin-bottom:2rem;">
+      Entry-level data scientist with a strong foundation in Python, SQL, R Studio, and
+      statistical analysis. Background spans cybersecurity (Purdue Global, MS in progress),
+      computer science, and graphic design — bringing both analytical rigor and the ability
+      to communicate complex findings clearly to non-technical stakeholders.
+      Ten years of retail operations experience at Publix provides direct understanding of
+      the business problems these four projects solve.
+    </p>
+    <div class="about-grid">
+      <div class="about-block">
+        <h4>Education</h4>
+        <div class="edu-item">
+          <div class="year">2024–2026</div>
+          <div class="degree">MS, Cybersecurity</div>
+          <div class="school">Purdue Global University</div>
+        </div>
+        <div class="edu-item">
+          <div class="year">Prior</div>
+          <div class="degree">BS, Computer Science</div>
+          <div class="school">Rasmussen College</div>
+        </div>
+        <div class="edu-item">
+          <div class="year">1999–2003</div>
+          <div class="degree">BS, Graphic Design</div>
+          <div class="school">Maryland Institute College of Art (MICA)</div>
+        </div>
+      </div>
+      <div class="about-block">
+        <h4>Certifications &amp; Memberships</h4>
+        <ul class="cert-list">
+          <li>HIPAA Business Associate Certification (2026)</li>
+          <li>ISC2 Certified in Cybersecurity — In Progress</li>
+          <li>CompTIA Security+ — In Progress</li>
+          <li>ISC2 Tampa Bay Chapter (2026)</li>
+          <li>ISACA West Florida Chapter (2026)</li>
+          <li>IEEE Women in Engineering (2020–Present)</li>
+          <li>AIGA (2002–Present)</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:2rem;padding:1.2rem 1.6rem;background:var(--light);border-left:4px solid var(--teal);border-radius:0 8px 8px 0;">
+      <strong style="color:var(--navy);">Open to remote Data Scientist roles.</strong>
+      <span style="color:var(--slate);"> Based in Tampa, FL &nbsp;·&nbsp; C. 813.743.1661 &nbsp;·&nbsp; References available upon request.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <p>Anél Henning &nbsp;·&nbsp; Data Scientist Portfolio &nbsp;·&nbsp; 2026</p>
+  <p style="margin-top:0.5rem;">
+    <a href="https://github.com/AnelHenning2-collab" target="_blank">GitHub</a>
+    &nbsp;·&nbsp;
+    <a href="AnelHenning_DataScientist_Portfolio_2026.pdf" target="_blank">Download PDF</a>
+  </p>
+</footer>
+
+</body>
+</html>
